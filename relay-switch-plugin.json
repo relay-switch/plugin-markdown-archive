@@ -1,0 +1,123 @@
+{
+  "manifestVersion": 1,
+  "id": "relay-switch.markdown-archive",
+  "name": "Markdown Archive",
+  "version": "0.1.0-alpha.0",
+  "description": "Exports local Claude Code and Codex CLI transcripts to Obsidian-friendly Markdown.",
+  "publisher": "relay-switch",
+  "engines": {
+    "relaySwitch": ">=1.0.0"
+  },
+  "entry": {
+    "type": "nodePackage",
+    "package": "@relay-switch/plugin-markdown-archive",
+    "version": "0.1.0-alpha.0",
+    "bin": "relay-switch-plugin-markdown-archive",
+    "args": ["serve"]
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "markdownArchive.syncNow",
+        "title": "Sync Conversations Now",
+        "category": "Archive"
+      },
+      {
+        "id": "markdownArchive.openOutputDirectory",
+        "title": "Open Output Directory",
+        "category": "Archive"
+      }
+    ],
+    "settings": {
+      "type": "object",
+      "title": "Markdown Archive",
+      "properties": {
+        "archiveEnabled": {
+          "type": "boolean",
+          "title": "Archive Enabled",
+          "default": false
+        },
+        "outputDirectory": {
+          "type": "string",
+          "title": "Output Directory",
+          "description": "Directory where Markdown files and the export index are written.",
+          "default": ""
+        },
+        "includeClaudeCode": {
+          "type": "boolean",
+          "title": "Include Claude Code",
+          "default": true
+        },
+        "includeCodexCLI": {
+          "type": "boolean",
+          "title": "Include Codex CLI",
+          "default": true
+        },
+        "autoSync": {
+          "type": "boolean",
+          "title": "Auto Sync",
+          "default": false
+        },
+        "syncIntervalSeconds": {
+          "type": "integer",
+          "title": "Sync Interval Seconds",
+          "default": 300
+        },
+        "includeSystemEvents": {
+          "type": "boolean",
+          "title": "Include System Events",
+          "default": false
+        },
+        "includeToolCalls": {
+          "type": "boolean",
+          "title": "Include Tool Calls",
+          "default": true
+        },
+        "redactSecrets": {
+          "type": "boolean",
+          "title": "Redact Secrets",
+          "default": true
+        },
+        "overwriteExisting": {
+          "type": "boolean",
+          "title": "Overwrite Existing Files",
+          "default": true
+        }
+      }
+    },
+    "transcriptSources": [
+      {
+        "id": "claude-code",
+        "title": "Claude Code",
+        "kind": "local-jsonl"
+      },
+      {
+        "id": "codex-cli",
+        "title": "Codex CLI",
+        "kind": "local-jsonl"
+      }
+    ],
+    "conversationExporters": [
+      {
+        "id": "obsidian-markdown",
+        "title": "Obsidian Markdown",
+        "format": "markdown"
+      }
+    ],
+    "backgroundTasks": [
+      {
+        "id": "markdownArchive.autoSync",
+        "title": "Auto Sync Conversations",
+        "minimumIntervalSeconds": 30
+      }
+    ]
+  },
+  "permissions": [
+    "tool.transcripts.read",
+    "filesystem.userSelectedDirectory.write",
+    "filesystem.pluginData",
+    "background.task",
+    "ui.page",
+    "ui.toast"
+  ]
+}

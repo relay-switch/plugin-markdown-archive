@@ -1,0 +1,29 @@
+{
+  "name": "@relay-switch/plugin-markdown-archive",
+  "version": "0.1.0-alpha.0",
+  "description": "Relay Switch official plugin for exporting local AI tool transcripts to Markdown.",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "bin": {
+    "relay-switch-plugin-markdown-archive": "./dist/main.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test dist/*.test.js",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepack": "pnpm build"
+  },
+  "files": [
+    "dist",
+    "!dist/*.test.*",
+    "relay-switch-plugin.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}
