@@ -32,6 +32,17 @@ The Relay Switch manifest uses a controlled `nodePackage` entry:
 
 Relay Switch starts the runtime over stdio JSON-RPC.
 
+## Local Conversation Browser
+
+The package can start a localhost-only React browser for Claude Code and Codex CLI history:
+
+```bash
+pnpm build
+node dist/main.js web --open
+```
+
+The Relay Switch command `markdownArchive.openBrowser` starts the same browser from the plugin runtime. The service binds to `127.0.0.1` and defaults to port `43178`; set `MARKDOWN_ARCHIVE_BROWSER_PORT` to choose another port.
+
 ## Development
 
 ```bash
