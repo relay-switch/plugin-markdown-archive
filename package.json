@@ -8,14 +8,21 @@
     "relay-switch-plugin-markdown-archive": "./dist/main.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "pnpm build:runtime && pnpm build:web",
+    "build:runtime": "tsc -p tsconfig.json",
+    "build:web": "vite build --config vite.config.ts",
     "test": "node --test dist/*.test.js",
-    "check": "tsc -p tsconfig.json --noEmit",
-    "prepack": "pnpm build"
+    "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "dev:web": "vite --config vite.config.ts --host 127.0.0.1",
+    "web": "pnpm start",
+    "prepack": "pnpm build",
+    "start": "pnpm build && node dist/main.js web",
+    "start:open": "pnpm build && node dist/main.js web --open"
   },
   "files": [
     "dist",
     "!dist/*.test.*",
+    "dist-web",
     "relay-switch-plugin.json",
     "README.md"
   ],
@@ -24,6 +31,13 @@
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
-    "typescript": "^5.9.2"
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "lucide-react": "^1.17.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^5.9.2",
+    "vite": "^8.0.16"
   }
 }

@@ -32,6 +32,29 @@ The Relay Switch manifest uses a controlled `nodePackage` entry:
 
 Relay Switch starts the runtime over stdio JSON-RPC.
 
+## Local Conversation Browser
+
+This repository also works as a standalone localhost service for browsing Claude Code and Codex CLI history.
+
+From a clone:
+
+```bash
+git clone https://github.com/relay-switch/plugin-markdown-archive.git
+cd plugin-markdown-archive
+pnpm install
+pnpm start
+```
+
+Open the printed localhost URL. Use `pnpm start:open` to open the browser automatically.
+
+From npm after the package is published:
+
+```bash
+npx @relay-switch/plugin-markdown-archive@0.1.0-alpha.0 web --open
+```
+
+The Relay Switch command `markdownArchive.openBrowser` starts the same browser from the plugin runtime. The service binds to `127.0.0.1` and defaults to port `43178`; set `MARKDOWN_ARCHIVE_BROWSER_PORT` to choose another port.
+
 ## Development
 
 ```bash
