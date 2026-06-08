@@ -14,8 +14,10 @@
     "test": "node --test dist/*.test.js",
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.web.json --noEmit",
     "dev:web": "vite --config vite.config.ts --host 127.0.0.1",
-    "web": "pnpm build && node dist/main.js web --open",
-    "prepack": "pnpm build"
+    "web": "pnpm start",
+    "prepack": "pnpm build",
+    "start": "pnpm build && node dist/main.js web",
+    "start:open": "pnpm build && node dist/main.js web --open"
   },
   "files": [
     "dist",
