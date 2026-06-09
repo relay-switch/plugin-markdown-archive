@@ -1,24 +1,24 @@
-# Relay Switch Markdown Archive Plugin
+# Relay Switch Markdown 归档插件
 
-Official Relay Switch plugin for exporting local AI tool transcripts to Obsidian-friendly Markdown.
+Relay Switch 官方插件，用于将本地 AI 工具会话记录导出为适合 Obsidian 使用的 Markdown。
 
-## What It Reads
+## 读取内容
 
-- Claude Code transcripts under `~/.claude/projects/**/*.jsonl`
-- Codex CLI transcripts under `~/.codex/sessions/**/*.jsonl`
-- Codex CLI archived transcripts under `~/.codex/archived_sessions/**/*.jsonl`
+- `~/.claude/projects/**/*.jsonl` 下的 Claude Code 会话记录
+- `~/.codex/sessions/**/*.jsonl` 下的 Codex CLI 会话记录
+- `~/.codex/archived_sessions/**/*.jsonl` 下的 Codex CLI 归档会话记录
 
-The plugin reads transcript files directly in v1. A future Relay Switch Transcript Broker can replace this direct file access.
+当前版本会直接读取本地会话文件。未来可以由 Relay Switch Transcript Broker 替代这类直接文件访问。
 
-## Privacy Notice
+## 隐私说明
 
-Conversation archive reads local assistant transcripts and writes full prompts, responses, code snippets, tool outputs, and possible secrets to Markdown files. Only enable this for directories you trust.
+会话归档会读取本地助手会话记录，并将完整提示词、回复、代码片段、工具输出以及可能存在的敏感信息写入 Markdown 文件。请只为你信任的输出目录启用这个插件。
 
-The `redactSecrets` setting applies best-effort redaction for common API key and token patterns. It is not a complete data-loss-prevention system.
+`redactSecrets` 设置会尽力隐藏常见 API Key 和 token 形式的敏感信息，但它不是完整的数据防泄漏系统。
 
-## Runtime
+## 运行方式
 
-The Relay Switch manifest uses a controlled `nodePackage` entry:
+Relay Switch manifest 使用受控的 `nodePackage` 入口：
 
 ```json
 {
@@ -30,13 +30,13 @@ The Relay Switch manifest uses a controlled `nodePackage` entry:
 }
 ```
 
-Relay Switch starts the runtime over stdio JSON-RPC.
+Relay Switch 会通过 stdio JSON-RPC 启动插件运行时。
 
-## Local Conversation Browser
+## 本地会话浏览器
 
-This repository also works as a standalone localhost service for browsing Claude Code and Codex CLI history.
+这个仓库也可以作为独立 localhost 服务使用，用来浏览 Claude Code 和 Codex CLI 历史会话。
 
-From a clone:
+从源码仓库启动：
 
 ```bash
 git clone https://github.com/relay-switch/plugin-markdown-archive.git
@@ -45,17 +45,17 @@ pnpm install
 pnpm start
 ```
 
-Open the printed localhost URL. Use `pnpm start:open` to open the browser automatically.
+打开终端输出的 localhost 地址。也可以使用 `pnpm start:open` 自动打开浏览器。
 
-From npm after the package is published:
+npm 包发布后可以这样启动：
 
 ```bash
 npx @relay-switch/plugin-markdown-archive@0.1.0-alpha.0 web --open
 ```
 
-The Relay Switch command `markdownArchive.openBrowser` starts the same browser from the plugin runtime. The service binds to `127.0.0.1` and defaults to port `43178`; set `MARKDOWN_ARCHIVE_BROWSER_PORT` to choose another port.
+Relay Switch 命令 `markdownArchive.openBrowser` 会从插件运行时启动同一个浏览器服务。服务绑定到 `127.0.0.1`，默认端口是 `43178`；可以设置 `MARKDOWN_ARCHIVE_BROWSER_PORT` 指定其他端口。
 
-## Development
+## 开发
 
 ```bash
 pnpm install
@@ -63,13 +63,13 @@ pnpm build
 pnpm test
 ```
 
-Local runtime smoke test:
+本地运行时冒烟测试：
 
 ```bash
 node dist/main.js serve
 ```
 
-Publishing the first integration build requires npm access to the `@relay-switch` scope:
+首次发布集成构建需要拥有 `@relay-switch` scope 的 npm 发布权限：
 
 ```bash
 npm publish --access public --tag alpha

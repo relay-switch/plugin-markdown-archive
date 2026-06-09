@@ -25,7 +25,7 @@ export async function syncArchive(settings: ArchiveSettings): Promise<SyncResult
     result.finishedAt = new Date().toISOString();
     result.failures.push({
       sourceId: "claude-code",
-      error: "Output directory is required."
+      error: "必须配置输出目录。"
     });
     result.failedCount = 1;
     return result;
@@ -49,7 +49,7 @@ export async function syncArchive(settings: ArchiveSettings): Promise<SyncResult
       result.failures.push({
         sourceId: ref.source,
         path: ref.path,
-        error: error instanceof Error ? error.message : "Failed to parse transcript."
+        error: error instanceof Error ? error.message : "解析会话记录失败。"
       });
       continue;
     }
@@ -70,7 +70,7 @@ export async function syncArchive(settings: ArchiveSettings): Promise<SyncResult
         sourceId: session.source,
         sessionId: session.sessionId,
         path: session.rawPath,
-        error: error instanceof Error ? error.message : "Failed to export transcript."
+        error: error instanceof Error ? error.message : "导出会话记录失败。"
       });
     }
   }

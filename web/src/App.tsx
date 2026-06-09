@@ -17,7 +17,7 @@ import type { Role, SessionDetail, SessionDetailResponse, SessionsResponse, Sess
 type SourceFilter = SourceID | "all";
 
 const sourceOptions: Array<{ id: SourceFilter; label: string }> = [
-  { id: "all", label: "All" },
+  { id: "all", label: "全部" },
   { id: "claude-code", label: "Claude" },
   { id: "codex-cli", label: "Codex" }
 ];
@@ -71,7 +71,7 @@ export function App() {
     loadSessions(controller.signal).catch((error) => {
       if (!controller.signal.aborted) {
         setLoadingList(false);
-        setListError(error instanceof Error ? error.message : "Failed to load sessions.");
+        setListError(error instanceof Error ? error.message : "加载会话失败。");
       }
     });
     return () => controller.abort();
@@ -101,7 +101,7 @@ export function App() {
       .catch((error) => {
         if (!controller.signal.aborted) {
           setLoadingDetail(false);
-          setDetailError(error instanceof Error ? error.message : "Failed to load session.");
+          setDetailError(error instanceof Error ? error.message : "加载会话详情失败。");
         }
       });
     return () => controller.abort();
@@ -130,37 +130,37 @@ export function App() {
     <div className="app-shell">
       <header className="topbar">
         <div>
-          <div className="product-mark"><FileText size={20} /> Markdown Archive</div>
-          <h1>Conversation Browser</h1>
+          <div className="product-mark"><FileText size={20} /> Markdown 归档</div>
+          <h1>会话浏览器</h1>
         </div>
         <div className="topbar-actions">
-          <button className="icon-button" onClick={() => setRefreshToken((value) => value + 1)} aria-label="Refresh sessions" title="Refresh sessions">
+          <button className="icon-button" onClick={() => setRefreshToken((value) => value + 1)} aria-label="刷新会话" title="刷新会话">
             <RefreshCw size={18} />
           </button>
           <button className="primary-button" onClick={syncNow} disabled={syncing}>
             {syncing ? <LoaderCircle className="spin" size={18} /> : <RefreshCw size={18} />}
-            Sync now
+            立即同步
           </button>
         </div>
       </header>
 
-      <section className="metrics-strip" aria-label="Session metrics">
-        <Metric label="Visible" value={metrics.total} />
+      <section className="metrics-strip" aria-label="会话统计">
+        <Metric label="可见会话" value={metrics.total} />
         <Metric label="Claude" value={metrics.claude} />
         <Metric label="Codex" value={metrics.codex} />
-        <Metric label="Parse errors" value={errors.length} tone={errors.length > 0 ? "warn" : "neutral"} />
+        <Metric label="解析错误" value={errors.length} tone={errors.length > 0 ? "warn" : "neutral"} />
       </section>
 
       <main className="content-grid">
-        <aside className="session-pane" aria-label="Conversation list">
+        <aside className="session-pane" aria-label="会话列表">
           <div className="filter-row">
             <label className="search-box">
               <Search size={17} />
-              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search conversations" />
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索会话" />
             </label>
           </div>
 
-          <div className="segmented" aria-label="Source filter">
+          <div className="segmented" aria-label="来源筛选">
             {sourceOptions.map((option) => (
               <button key={option.id} className={source === option.id ? "active" : ""} onClick={() => setSource(option.id)}>
                 {option.label}
@@ -171,7 +171,7 @@ export function App() {
           <label className="select-label">
             <SlidersHorizontal size={16} />
             <select value={project} onChange={(event) => setProject(event.target.value)}>
-              <option value="all">All projects</option>
+              <option value="all">全部项目</option>
               {projects.map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </label>
@@ -179,7 +179,7 @@ export function App() {
           {listError ? <InlineError text={listError} /> : null}
           <div className="session-list">
             {loadingList ? <LoadingRows /> : null}
-            {!loadingList && sessions.length === 0 ? <EmptyState text="No sessions found" /> : null}
+            {!loadingList && sessions.length === 0 ? <EmptyState text="未找到会话" /> : null}
             {!loadingList && sessions.map((session) => (
               <button key={session.id} className={"session-card " + (session.id === selectedId ? "selected" : "")} onClick={() => setSelectedId(session.id)}>
                 <div className="session-card-topline">
@@ -188,9 +188,9 @@ export function App() {
                 </div>
                 <strong>{session.title}</strong>
                 <span className="session-project">{session.projectName}</span>
-                <p>{session.preview || "No text content"}</p>
+                <p>{session.preview || "暂无文本内容"}</p>
                 <div className="session-card-meta">
-                  <span>{session.messageCount} messages</span>
+                  <span>{session.messageCount} 条消息</span>
                   <span>{formatBytes(session.rawSize)}</span>
                 </div>
               </button>
@@ -198,10 +198,10 @@ export function App() {
           </div>
         </aside>
 
-        <section className="reader-pane" aria-label="Conversation detail">
+        <section className="reader-pane" aria-label="会话详情">
           {syncResult ? <SyncBanner result={syncResult} /> : null}
           {detailError ? <InlineError text={detailError} /> : null}
-          {!selectedId && !loadingList ? <EmptyState text="No conversation selected" /> : null}
+          {!selectedId && !loadingList ? <EmptyState text="未选择会话" /> : null}
           {loadingDetail ? <ReaderLoading /> : null}
           {!loadingDetail && detail ? <ConversationDetail detail={detail} markdown={markdown} summary={selectedSummary} /> : null}
         </section>
@@ -227,7 +227,7 @@ function ConversationDetail({ detail, markdown, summary }: { detail: SessionDeta
           <h2>{detail.title}</h2>
           <p>{detail.rawPath}</p>
         </div>
-        <div className="reader-counts" aria-label="Message role counts">
+        <div className="reader-counts" aria-label="消息角色统计">
           <RoleCount role="user" count={summary?.roleCounts.user || 0} />
           <RoleCount role="assistant" count={summary?.roleCounts.assistant || 0} />
           <RoleCount role="tool" count={summary?.roleCounts.tool || 0} />
@@ -241,7 +241,7 @@ function ConversationDetail({ detail, markdown, summary }: { detail: SessionDeta
       </div>
 
       <details className="markdown-panel">
-        <summary>Rendered Markdown</summary>
+        <summary>渲染后的 Markdown</summary>
         <pre>{markdown}</pre>
       </details>
     </article>
@@ -255,7 +255,7 @@ function MessageBlock({ message }: { message: SessionDetail["messages"][number] 
         <span>{roleIcon(message.role)} {roleLabel(message.role)}</span>
         {message.timestamp ? <time>{formatDate(message.timestamp)}</time> : null}
       </header>
-      <pre>{message.text || "No text content"}</pre>
+      <pre>{message.text || "暂无文本内容"}</pre>
     </section>
   );
 }
@@ -267,8 +267,8 @@ function RoleCount({ role, count }: { role: Role; count: number }) {
 function SyncBanner({ result }: { result: SyncResult }) {
   return (
     <div className={"sync-banner " + result.status}>
-      <strong>{result.status}</strong>
-      <span>Exported {result.exportedCount}, skipped {result.skippedCount}, failed {result.failedCount}</span>
+      <strong>{syncStatusLabel(result.status)}</strong>
+      <span>已导出 {result.exportedCount}，已跳过 {result.skippedCount}，失败 {result.failedCount}</span>
     </div>
   );
 }
@@ -286,7 +286,7 @@ function LoadingRows() {
 }
 
 function ReaderLoading() {
-  return <div className="reader-loading"><LoaderCircle className="spin" size={22} /> Loading</div>;
+  return <div className="reader-loading"><LoaderCircle className="spin" size={22} /> 加载中</div>;
 }
 
 function sourceLabel(source: SourceID) {
@@ -296,15 +296,28 @@ function sourceLabel(source: SourceID) {
 function roleLabel(role: Role) {
   switch (role) {
     case "user":
-      return "User";
+      return "用户";
     case "assistant":
-      return "Assistant";
+      return "助手";
     case "tool":
-      return "Tool";
+      return "工具";
     case "system":
-      return "System";
+      return "系统";
     default:
-      return "Event";
+      return "事件";
+  }
+}
+
+function syncStatusLabel(status: SyncResult["status"]) {
+  switch (status) {
+    case "success":
+      return "成功";
+    case "partial":
+      return "部分成功";
+    case "failed":
+      return "失败";
+    default:
+      return status;
   }
 }
 
@@ -325,13 +338,13 @@ function roleIcon(role: Role) {
 
 function formatDate(value: string) {
   if (!value) {
-    return "Unknown";
+    return "未知";
   }
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat("zh-CN", {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(date);

@@ -61,7 +61,7 @@ export class JsonRpcServer {
         id: null,
         error: {
           code: -32700,
-          message: "Parse error"
+          message: "解析错误"
         }
       });
       return;
@@ -73,7 +73,7 @@ export class JsonRpcServer {
         id: request.id ?? null,
         error: {
           code: -32600,
-          message: "Invalid request"
+          message: "无效请求"
         }
       });
       return;
@@ -86,7 +86,7 @@ export class JsonRpcServer {
         id: request.id ?? null,
         error: {
           code: -32601,
-          message: `Method not found: ${request.method}`
+          message: `未找到方法: ${request.method}`
         }
       });
       return;
@@ -108,7 +108,7 @@ export class JsonRpcServer {
           id: request.id,
           error: {
             code: -32000,
-            message: error instanceof Error ? error.message : "Method failed"
+            message: error instanceof Error ? error.message : "方法执行失败"
           }
         });
       }

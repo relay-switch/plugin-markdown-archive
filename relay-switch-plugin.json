@@ -1,9 +1,9 @@
 {
   "manifestVersion": 1,
   "id": "relay-switch.markdown-archive",
-  "name": "Markdown Archive",
+  "name": "Markdown 归档",
   "version": "0.1.0-alpha.0",
-  "description": "Exports local Claude Code and Codex CLI transcripts to Obsidian-friendly Markdown.",
+  "description": "将本地 Claude Code 和 Codex CLI 会话导出为适合 Obsidian 使用的 Markdown。",
   "publisher": "relay-switch",
   "engines": {
     "relaySwitch": ">=1.0.0"
@@ -21,73 +21,73 @@
     "commands": [
       {
         "id": "markdownArchive.syncNow",
-        "title": "Sync Conversations Now",
-        "category": "Archive"
+        "title": "立即同步会话",
+        "category": "归档"
       },
       {
         "id": "markdownArchive.openOutputDirectory",
-        "title": "Open Output Directory",
-        "category": "Archive"
+        "title": "打开输出目录",
+        "category": "归档"
       },
       {
         "id": "markdownArchive.openBrowser",
-        "title": "Open Conversation Browser",
-        "category": "Archive"
+        "title": "打开会话浏览器",
+        "category": "归档"
       }
     ],
     "settings": {
       "type": "object",
-      "title": "Markdown Archive",
+      "title": "Markdown 归档",
       "properties": {
         "archiveEnabled": {
           "type": "boolean",
-          "title": "Archive Enabled",
+          "title": "启用归档",
           "default": false
         },
         "outputDirectory": {
           "type": "string",
-          "title": "Output Directory",
-          "description": "Directory where Markdown files and the export index are written.",
+          "title": "输出目录",
+          "description": "Markdown 文件和导出索引写入的目录。",
           "default": ""
         },
         "includeClaudeCode": {
           "type": "boolean",
-          "title": "Include Claude Code",
+          "title": "包含 Claude Code",
           "default": true
         },
         "includeCodexCLI": {
           "type": "boolean",
-          "title": "Include Codex CLI",
+          "title": "包含 Codex CLI",
           "default": true
         },
         "autoSync": {
           "type": "boolean",
-          "title": "Auto Sync",
+          "title": "自动同步",
           "default": false
         },
         "syncIntervalSeconds": {
           "type": "integer",
-          "title": "Sync Interval Seconds",
+          "title": "同步间隔秒数",
           "default": 300
         },
         "includeSystemEvents": {
           "type": "boolean",
-          "title": "Include System Events",
+          "title": "包含系统事件",
           "default": false
         },
         "includeToolCalls": {
           "type": "boolean",
-          "title": "Include Tool Calls",
+          "title": "包含工具调用",
           "default": true
         },
         "redactSecrets": {
           "type": "boolean",
-          "title": "Redact Secrets",
+          "title": "隐藏敏感信息",
           "default": true
         },
         "overwriteExisting": {
           "type": "boolean",
-          "title": "Overwrite Existing Files",
+          "title": "覆盖已有文件",
           "default": true
         }
       }
@@ -114,14 +114,14 @@
     "backgroundTasks": [
       {
         "id": "markdownArchive.autoSync",
-        "title": "Auto Sync Conversations",
+        "title": "自动同步会话",
         "minimumIntervalSeconds": 30
       }
     ],
     "pages": [
       {
         "id": "markdownArchive.browser",
-        "title": "Conversation Browser",
+        "title": "会话浏览器",
         "kind": "localhost"
       }
     ]
