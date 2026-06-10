@@ -1,11 +1,11 @@
 import type { ArchiveSettings } from "./types.js";
 
 export const defaultSettings: ArchiveSettings = {
-  archiveEnabled: false,
+  archiveEnabled: true,
   outputDirectory: "",
   includeClaudeCode: true,
   includeCodexCLI: true,
-  autoSync: false,
+  autoSync: true,
   syncIntervalSeconds: 300,
   includeSystemEvents: false,
   includeToolCalls: true,

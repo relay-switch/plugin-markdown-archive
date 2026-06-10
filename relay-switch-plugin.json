@@ -39,36 +39,16 @@
       "type": "object",
       "title": "Markdown 归档",
       "properties": {
-        "archiveEnabled": {
-          "type": "boolean",
-          "title": "启用归档",
-          "default": false
-        },
         "outputDirectory": {
           "type": "string",
           "title": "输出目录",
           "description": "Markdown 文件和导出索引写入的目录。",
           "default": ""
         },
-        "includeClaudeCode": {
+        "redactSecrets": {
           "type": "boolean",
-          "title": "包含 Claude Code",
+          "title": "隐藏敏感信息",
           "default": true
-        },
-        "includeCodexCLI": {
-          "type": "boolean",
-          "title": "包含 Codex CLI",
-          "default": true
-        },
-        "autoSync": {
-          "type": "boolean",
-          "title": "自动同步",
-          "default": false
-        },
-        "syncIntervalSeconds": {
-          "type": "integer",
-          "title": "同步间隔秒数",
-          "default": 300
         },
         "includeSystemEvents": {
           "type": "boolean",
@@ -80,15 +60,10 @@
           "title": "包含工具调用",
           "default": true
         },
-        "redactSecrets": {
-          "type": "boolean",
-          "title": "隐藏敏感信息",
-          "default": true
-        },
-        "overwriteExisting": {
-          "type": "boolean",
-          "title": "覆盖已有文件",
-          "default": true
+        "syncIntervalSeconds": {
+          "type": "integer",
+          "title": "同步间隔秒数",
+          "default": 300
         }
       }
     },
