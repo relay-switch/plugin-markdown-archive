@@ -56,7 +56,7 @@ export async function startWebServer(settingsProvider: () => ArchiveSettings, op
         ? Number((error as { statusCode: number }).statusCode)
         : 500;
       writeJSON(response, Number.isFinite(statusCode) ? statusCode : 500, {
-        error: error instanceof Error ? error.message : "Request failed."
+        error: error instanceof Error ? error.message : "请求失败。"
       });
     });
   });
@@ -110,7 +110,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse,
   }
 
   if (method !== "GET" && method !== "HEAD") {
-    writeJSON(response, 405, { error: "Method not allowed." });
+    writeJSON(response, 405, { error: "不支持的请求方法。" });
     return;
   }
 
@@ -130,7 +130,7 @@ async function listSessions(settings: ArchiveSettings, params: URLSearchParams) 
       errors.push({
         path: ref.path,
         source: ref.source,
-        error: error instanceof Error ? error.message : "Failed to parse transcript."
+        error: error instanceof Error ? error.message : "解析会话记录失败。"
       });
     }
   }
@@ -170,7 +170,7 @@ async function getSessionDetail(settings: ArchiveSettings, id: string) {
   const refs = await discoverTranscriptRefs(settings);
   const ref = refs.find((item) => item.path === rawPath);
   if (!ref) {
-    const error = new Error("Session not found.");
+    const error = new Error("未找到会话。");
     Object.assign(error, { statusCode: 404 });
     throw error;
   }
@@ -298,7 +298,7 @@ async function serveStatic(urlPath: string, response: ServerResponse) {
 
   const filePath = path.normalize(path.join(webRoot, pathname.replace(/^\/+/, "")));
   if (!filePath.startsWith(webRoot + path.sep) && filePath !== webRoot) {
-    writeJSON(response, 403, { error: "Forbidden." });
+    writeJSON(response, 403, { error: "禁止访问。" });
     return;
   }
 
@@ -319,7 +319,7 @@ async function serveStatic(urlPath: string, response: ServerResponse) {
       }
     }
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      writeJSON(response, 404, { error: "Not found." });
+      writeJSON(response, 404, { error: "未找到。" });
       return;
     }
     throw error;
@@ -353,7 +353,7 @@ function writeJSON(response: ServerResponse, statusCode: number, payload: unknow
 
 function writeMissingApp(response: ServerResponse) {
   response.writeHead(503, { "content-type": "text/html; charset=utf-8" });
-  response.end("<!doctype html><title>Markdown Archive</title><main style=\"font-family:system-ui;padding:32px\"><h1>Web assets are not built</h1><p>Run pnpm build:web before starting the browser.</p></main>");
+  response.end("<!doctype html><title>Markdown 归档</title><main style=\"font-family:system-ui;padding:32px\"><h1>Web 资源尚未构建</h1><p>启动浏览器前请先运行 pnpm build:web。</p></main>");
 }
 
 function listen(server: Server, host: string, port: number): Promise<number> {

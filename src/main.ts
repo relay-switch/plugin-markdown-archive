@@ -54,7 +54,7 @@ class MarkdownArchiveRuntime {
       case openBrowserCommand:
         return this.openBrowser();
       default:
-        throw new Error("Unsupported command: " + commandId);
+        throw new Error("不支持的命令: " + commandId);
     }
   }
 
@@ -66,13 +66,13 @@ class MarkdownArchiveRuntime {
     if (this.syncRunning) {
       return {
         status: "skipped",
-        message: "A sync is already running."
+        message: "同步已在运行中。"
       };
     }
     if (mode === "auto" && (!this.settings.archiveEnabled || !this.settings.autoSync)) {
       return {
         status: "skipped",
-        message: "Auto sync is disabled."
+        message: "自动同步已停用。"
       };
     }
 
@@ -82,7 +82,7 @@ class MarkdownArchiveRuntime {
       const result = await syncArchive(this.settings);
       this.applySyncResult(result);
       if (result.status === "failed") {
-        this.lastError = result.failures[0]?.error ?? "Sync failed.";
+        this.lastError = result.failures[0]?.error ?? "同步失败。";
         return {
           status: "failed",
           message: this.lastError,
@@ -93,11 +93,11 @@ class MarkdownArchiveRuntime {
       this.lastError = "";
       return {
         status: result.status,
-        message: "Exported " + result.exportedCount + ", skipped " + result.skippedCount + ", failed " + result.failedCount + ".",
+        message: "已导出 " + result.exportedCount + "，已跳过 " + result.skippedCount + "，失败 " + result.failedCount + "。",
         result
       };
     } catch (error) {
-      this.lastError = error instanceof Error ? error.message : "Sync failed.";
+      this.lastError = error instanceof Error ? error.message : "同步失败。";
       this.failedCount++;
       return {
         status: "failed",
@@ -113,7 +113,7 @@ class MarkdownArchiveRuntime {
     if (!this.settings.outputDirectory) {
       return {
         status: "failed",
-        message: "Output directory is not configured."
+        message: "尚未配置输出目录。"
       };
     }
 
@@ -121,12 +121,12 @@ class MarkdownArchiveRuntime {
     if (!opened) {
       return {
         status: "failed",
-        message: "Open output directory is not supported on " + process.platform + "."
+        message: "当前平台不支持打开输出目录: " + process.platform + "。"
       };
     }
     return {
       status: "success",
-      message: "Output directory opened."
+      message: "输出目录已打开。"
     };
   }
 
@@ -135,7 +135,7 @@ class MarkdownArchiveRuntime {
     openExternal(server.url);
     return {
       status: "success",
-      message: "Conversation browser is running at " + server.url,
+      message: "会话浏览器已运行: " + server.url,
       url: server.url
     };
   }
@@ -299,7 +299,7 @@ async function runWebMode(args: string[]) {
     serverOptions.port = options.port;
   }
   const server = await startWebServer(() => settings, serverOptions);
-  process.stdout.write("Markdown Archive browser running at " + server.url + "\n");
+  process.stdout.write("Markdown 归档浏览器已运行: " + server.url + "\n");
   if (options.open) {
     openExternal(server.url);
   }
@@ -318,7 +318,7 @@ async function main() {
     return;
   }
   if (mode !== "serve") {
-    process.stderr.write("Usage: relay-switch-plugin-markdown-archive serve|web [--host 127.0.0.1] [--port 43178] [--open] [--output DIR]\n");
+    process.stderr.write("用法: relay-switch-plugin-markdown-archive serve|web [--host 127.0.0.1] [--port 43178] [--open] [--output DIR]\n");
     process.exitCode = 2;
     return;
   }
@@ -331,7 +331,7 @@ async function main() {
   server.register("executeCommand", (params) => runtime.executeCommand(params));
   server.register("getStatus", () => runtime.getStatus());
   server.start();
-  log("runtime started");
+  log("运行时已启动");
 }
 
 void main().catch((error) => {
