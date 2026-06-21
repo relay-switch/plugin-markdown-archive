@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@relay-switch/plugin-tools':
+        specifier: file:../plugin-tools
+        version: file:../plugin-tools
       '@types/node':
         specifier: ^24.3.0
         version: 24.13.1
@@ -55,6 +58,11 @@ packages:
 
   '@oxc-project/types@0.133.0':
     resolution: {integrity: sha512-KzkdCd6Uxqnf6l3HOw1xfatAlUURA0g14cvBYFyJ5SaNOQbOUvBr9PKArcPcrNIeRsBdgcUzOGrhKveVpvOIGA==}
+
+  '@relay-switch/plugin-tools@file:../plugin-tools':
+    resolution: {directory: ../plugin-tools, type: directory}
+    engines: {node: '>=20'}
+    hasBin: true
 
   '@rolldown/binding-android-arm64@1.0.3':
     resolution: {integrity: sha512-454rs7jHngixp/NMxd5srYD57OnzSlZ/eFTETjORQHLwJG1lRtmNOJcBerZlfu4GjKqeq8aCCIQrMdHyhI51Hw==}
@@ -180,6 +188,14 @@ packages:
         optional: true
       babel-plugin-react-compiler:
         optional: true
+
+  buffer-crc32@1.0.0:
+    resolution: {integrity: sha512-Db1SbgBS/fg/392AblrMJk97KggmvYhr4pB5ZIMTWtaivCPMWLkmb7m21cJvpvgK+J3nsU2CmmixNBZx4vFj/w==}
+    engines: {node: '>=8.0.0'}
+
+  commander@14.0.3:
+    resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==}
+    engines: {node: '>=20'}
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
@@ -376,6 +392,9 @@ packages:
       yaml:
         optional: true
 
+  yazl@3.3.1:
+    resolution: {integrity: sha512-BbETDVWG+VcMUle37k5Fqp//7SDOK2/1+T7X8TD96M3D9G8jK5VLUdQVdVjGi8im7FGkazX7kk5hkU8X4L5Bng==}
+
 snapshots:
 
   '@emnapi/core@1.10.0':
@@ -402,6 +421,11 @@ snapshots:
     optional: true
 
   '@oxc-project/types@0.133.0': {}
+
+  '@relay-switch/plugin-tools@file:../plugin-tools':
+    dependencies:
+      commander: 14.0.3
+      yazl: 3.3.1
 
   '@rolldown/binding-android-arm64@1.0.3':
     optional: true
@@ -475,6 +499,10 @@ snapshots:
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.0.16(@types/node@24.13.1)
+
+  buffer-crc32@1.0.0: {}
+
+  commander@14.0.3: {}
 
   csstype@3.2.3: {}
 
@@ -606,3 +634,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.13.1
       fsevents: 2.3.3
+
+  yazl@3.3.1:
+    dependencies:
+      buffer-crc32: 1.0.0
